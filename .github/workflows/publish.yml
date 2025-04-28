@@ -36,7 +36,7 @@ jobs:
 
       - name: Build and submit to Mozilla
         if: matrix.command == 'Firefox'
-        run: pnpm build && npx web-ext-submit@7
+        run: pnpm build && npx web-ext-submit@8
         env:
           WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
           WEB_EXT_API_SECRET: ${{ secrets.WEB_EXT_API_SECRET }}
