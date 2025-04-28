@@ -747,7 +747,7 @@ function parseGitHubUrl({ pathname }) {
   const path = pathname.startsWith("/") ? pathname : `/${pathname}`;
 
   // Match patterns like /owner/repo/issues/123 or /owner/repo/pull/123
-  const matches = /^\/([^\/]+)\/([^\/]+)\/(issues|pull)\/(\d+)/.exec(path);
+  const matches = /^\/([^/]+)\/([^/]+)\/(issues|pull)\/(\d+)/.exec(path);
   if (!matches) return null;
 
   const [_fullMatch, org, repo, type, number] = matches;
