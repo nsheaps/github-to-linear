@@ -8,15 +8,18 @@
   "scripts": {
     "build": "node ./scripts/build.mjs",
     "build:chrome": "node ./scripts/build.mjs --chromium",
-    "dev": "pnpm dlx web-ext@7 run",
-    "dev:chrome": "pnpm dlx web-ext@7 run --target=chromium"
+    "dev": "pnpm dlx web-ext@8 run",
+    "dev:chrome": "pnpm dlx web-ext@8 run --target=chromium",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.8",
     "@changesets/cli": "^2.26.1",
-    "chrome-types": "^0.1.181"
+    "chrome-types": "^0.1.181",
+    "oxlint": "^0.16.8"
   },
-  "packageManager": "pnpm@8.1.0",
+  "packageManager": "pnpm@8.15.9+sha512.499434c9d8fdd1a2794ebf4552b3b25c0a633abcee5bb15e7b5de90f32f47b513aca98cd5cfd001c31f0db454bc3804edccd578501e4ca293a6816166bbd9f81",
   "webExt": {
     "sourceDir": "extension",
     "run": {

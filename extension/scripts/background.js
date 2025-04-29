@@ -4,7 +4,7 @@
  */
 function loadLinearApiKey() {
   return new Promise((resolve) => {
-    chrome.storage.local.get(['pat'], ({ pat }) => resolve(pat || null));
+    chrome.storage.local.get(["pat"], ({ pat }) => resolve(pat || null));
   });
 }
 
@@ -21,11 +21,11 @@ async function queryLinearApi(query) {
   if (!apiKey) return null;
   const cached = queryCache.get(query);
   if (cached && Date.now() - cached.t < 30_000) return cached.data;
-  const response = await fetch('https://api.linear.app/graphql', {
-    method: 'POST',
+  const response = await fetch("https://api.linear.app/graphql", {
+    method: "POST",
     headers: {
       Authorization: apiKey,
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
     body: JSON.stringify({ query }),
   });
@@ -38,15 +38,15 @@ async function queryLinearApi(query) {
 // Currently handles messages containing a `linearQuery` GraphQL query,
 // responding with data from the Linear API. All other messages will return null.
 chrome.runtime.onMessage.addListener((request, _sender, sendResponse) => {
-  let query = Promise.resolve(null);
-  if (request && typeof request === 'object' && 'linearQuery' in request) {
-    query = queryLinearApi(request.linearQuery);
+  if (request && typeof request === "object" && "linearQuery" in request) {
+    queryLinearApi(request.linearQuery)
+      .then((json) => sendResponse(json || null))
+      .catch((error) => {
+        console.error({ error });
+        sendResponse(null);
+      });
+    return true; // Will respond asynchronously
   }
-  query
-    .then((json) => sendResponse(json || null))
-    .catch((error) => {
-      console.error({ error });
-      sendResponse(null);
-    });
-  return true;
+  sendResponse(null);
+  return false;
 });
